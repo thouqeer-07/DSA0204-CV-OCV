@@ -1,0 +1,26 @@
+import cv2
+import numpy as np
+
+def compute_dlt(pts_src, pts_dst):
+    A = []
+    for i in range(len(pts_src)):
+        x, y = pts_src[i][0], pts_src[i][1]
+        u, v = pts_dst[i][0], pts_dst[i][1]
+        A.append([-x, -y, -1, 0, 0, 0, x*u, y*u, u])
+        A.append([0, 0, 0, -x, -y, -1, x*v, y*v, v])
+    A = np.array(A)
+    _, _, Vt = np.linalg.svd(A)
+    H = Vt[-1].reshape(3, 3)
+    return H / H[2, 2]
+
+img = cv2.imread('image.jpg')
+pts_src = np.array([[141, 131], [480, 159], [493, 630], [64, 601]], dtype=np.float32)
+pts_dst = np.array([[0, 0], [400, 0], [400, 600], [0, 600]], dtype=np.float32)
+
+H = compute_dlt(pts_src, pts_dst)
+result = cv2.warpPerspective(img, H, (400, 600))
+
+cv2.imshow('Original', img)
+cv2.imshow('DLT Result', result)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

@@ -1,0 +1,15 @@
+import cv2
+
+img = cv2.imread('image.jpg')
+
+# Draw rectangle around region of interest
+x, y, w, h = 50, 50, 200, 150
+cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+# Extract the object inside the rectangle
+extracted = img[y:y+h, x:x+w]
+
+cv2.imshow('Rectangle Drawn', img)
+cv2.imshow('Extracted Object', extracted)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

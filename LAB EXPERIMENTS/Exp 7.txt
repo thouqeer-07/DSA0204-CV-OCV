@@ -1,0 +1,16 @@
+import cv2
+
+cap = cv2.VideoCapture(0)
+mode = input("Enter mode - slow/fast: ").strip().lower()
+delay = 100 if mode == 'slow' else 5
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    cv2.imshow('Webcam', frame)
+    if cv2.waitKey(delay) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()

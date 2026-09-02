@@ -1,0 +1,19 @@
+import cv2
+
+cap = cv2.VideoCapture('video.mp4')
+fps = cap.get(cv2.CAP_PROP_FPS)
+
+mode = input("Enter mode - slow/fast: ").strip().lower()
+delay = int(1000 / fps)
+delay = delay * 3 if mode == 'slow' else max(1, delay // 3)
+
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+    cv2.imshow('Video Playback', frame)
+    if cv2.waitKey(delay) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()

@@ -1,0 +1,15 @@
+import cv2
+
+img = cv2.imread('image.jpg')
+background = cv2.imread('background.jpg')
+
+# Crop a region
+cropped = img[50:200, 50:200]
+
+# Paste into background at position (100, 100)
+background[100:100+cropped.shape[0], 100:100+cropped.shape[1]] = cropped
+
+cv2.imshow('Cropped', cropped)
+cv2.imshow('Pasted Result', background)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

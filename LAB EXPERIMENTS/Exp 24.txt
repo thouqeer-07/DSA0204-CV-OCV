@@ -1,0 +1,12 @@
+import cv2
+
+img = cv2.imread('image.jpg')
+blurred = cv2.GaussianBlur(img, (9, 9), 10.0)
+mask = cv2.subtract(img, blurred)
+
+A = 1.5  # boost factor (A > 1)
+high_boost = cv2.addWeighted(img, A, mask, 1, 0)
+
+cv2.imshow('High-Boost Result', high_boost)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

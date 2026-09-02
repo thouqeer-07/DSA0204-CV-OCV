@@ -1,0 +1,12 @@
+import cv2
+
+img = cv2.imread('image.jpg')
+h, w = img.shape[:2]
+
+watermark_text = "SIMATS"
+cv2.putText(img, watermark_text, (w - 200, h - 20),
+            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+cv2.imshow('Watermarked Image', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
